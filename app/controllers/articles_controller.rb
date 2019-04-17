@@ -9,14 +9,18 @@ class ArticlesController < ApplicationController
   end
 
   def new
+    @article = Article.new
   end
 
 
   def create
     @article = Article.new(article_params)
 
-    @article.save
-    redirect_to @article
+    if @article.save # article passes validations
+      redirect_to @article 
+    else # validations failed, send them back to fix the mistake
+      render 'new'
+    end
   end
 
   private
